@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080d0b">
+<title>UterLIZ | My intro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bg-image" aria-hidden="true"></div><div class="shade" aria-hidden="true"></div><div class="scanlines" aria-hidden="true"></div>
+<header class="topbar">
+  <a class="logo" href="#home" data-page="home"><span class="logo-icon">U</span><span>UTER<span class="green">LIZ</span><small>GAMER / DEVELOPER</small></span></a>
+  <nav><button class="nav-link active" data-page="home">HOME</button><button class="nav-link" data-page="services">SERVICES</button></nav>
+  <button class="sound-toggle" id="soundToggle" aria-pressed="false"><span class="sound-icon">♫</span><span id="soundLabel">SOUND OFF</span></button>
+</header>
+<main>
+<section id="home" class="page active">
+  <div class="hero-content">
+    <div class="eyebrow"><span class="pulse"></span> PLAYER FOUND · COMMISSIONS OPEN</div>
+    <p class="pretitle">WELCOME TO MY WORLD</p>
+    <h1>HEY, I'M <span class="hero-name">UterLIZ<span class="cursor">_</span></span></h1>
+    <div class="role-line"><span>GAMER</span><i>◆</i><span>DEVELOPER</span><i>◆</i><span>CREATOR</span></div>
+    <p class="intro">I turn ideas into <strong>game-changing builds.</strong><br>From custom Minecraft plugins to smart Discord bots<br class="desktop"> and clean websites — let's build something legendary.</p>
+    <div class="hero-actions"><button class="btn primary" data-page="services">EXPLORE SERVICES <span>↗</span></button><a class="btn secondary" href="#contact" data-contact>CONTACT ME <span>⌁</span></a></div>
+    <div class="stats"><div><span class="stat-mark">▣</span><span><b>MC</b><small>MINECRAFT PLUGINS</small></span></div><div><span class="stat-mark">⌘</span><span><b>BOT</b><small>DISCORD BOTS</small></span></div><div><span class="stat-mark">⌁</span><span><b>WEB</b><small>WEBSITE BUILDS</small></span></div></div>
+  </div>
+  <div class="scroll-cue"><span></span> SCROLL TO EXPLORE</div>
+</section>
+<section id="services" class="page services-page">
+  <div class="section-top"><div class="eyebrow"><span class="pulse"></span> THE ARMORY · SERVICES</div><h2>WHAT I <span>BUILD.</span></h2><p>Got a vision? Let's turn it into something real.</p></div>
+  <div class="service-grid">
+    <article class="service-card"><div class="service-top"><div class="service-icon minecraft-icon">▦</div><span class="service-num">01 / MC</span></div><div class="service-label">GAME DEVELOPMENT</div><h3>MINECRAFT<br><em>PLUGINS</em></h3><p>Make your server stand out with custom gameplay, commands, and features built around your vision.</p><ul><li>Custom commands & permissions</li><li>Gameplay systems & mechanics</li><li>Server tools & configuration</li></ul><div class="price"><small>STARTING AT</small><strong>₹100<span>+</span></strong></div><button class="btn primary order-btn" data-service="Minecraft Plugin Development">ORDER NOW <span>↗</span></button></article>
+    <article class="service-card featured"><div class="featured-flag">POPULAR BUILD</div><div class="service-top"><div class="service-icon discord-icon">⌘</div><span class="service-num">02 / BOT</span></div><div class="service-label">AUTOMATION & COMMUNITY</div><h3>DISCORD<br><em>BOTS</em></h3><p>Give your community a smarter setup with bots made for your server and its needs.</p><ul><li>Moderation & utility commands</li><li>Automation & server tools</li><li>Custom features & workflows</li></ul><div class="price"><small>STARTING AT</small><strong>₹100<span>+</span></strong></div><button class="btn primary order-btn" data-service="Discord Bot Development">ORDER NOW <span>↗</span></button></article>
+    <article class="service-card"><div class="service-top"><div class="service-icon web-icon">⌁</div><span class="service-num">03 / WEB</span></div><div class="service-label">DESIGN & DEVELOPMENT</div><h3>WEBSITE<br><em>DEVELOPMENT</em></h3><p>Fast, modern websites that look sharp on desktop and mobile, from portfolios to gaming hubs.</p><ul><li>Portfolios & landing pages</li><li>Gaming & server websites</li><li>Responsive modern UI</li></ul><div class="price"><small>STARTING AT</small><strong>₹100<span>+</span></strong></div><button class="btn primary order-btn" data-service="Website Development">ORDER NOW <span>↗</span></button></article>
+  </div>
+  <div class="services-bottom"><span>◈ CUSTOM REQUESTS WELCOME</span><span>FINAL PRICE DEPENDS ON PROJECT SCOPE</span></div>
+</section>
+<section id="contact" class="contact-panel hidden" aria-hidden="true"><div class="contact-card"><button class="close-contact" id="closeContact" aria-label="Close contact form">×</button><div class="eyebrow">START A PROJECT</div><h2>LET'S BUILD IT.</h2><p>Tell me what you're imagining. This demo prepares your request for you to copy and send.</p>
+<form id="orderForm"><label>Your name<input name="name" required placeholder="Player name"></label><label>Service<select name="service" id="serviceSelect" required><option value="Minecraft Plugin Development">Minecraft Plugin Development</option><option value="Discord Bot Development">Discord Bot Development</option><option value="Website Development">Website Development</option><option value="Other / Custom">Other / Custom</option></select></label><label>Budget (₹)<input name="budget" type="number" min="100" placeholder="Starting from 100" required></label><label>Project details<textarea name="details" rows="3" required placeholder="What do you want me to build?"></textarea></label><button class="btn primary" type="submit">PREPARE REQUEST ↗</button></form><div id="orderOutput" class="order-output hidden"><p>Your request is ready. Copy it and send it through your preferred contact channel.</p><textarea id="requestText" rows="7" readonly></textarea><button class="btn secondary" id="copyRequest">COPY REQUEST</button></div></div></section>
+</main>
+<footer><a class="footer-logo" href="#home" data-page="home">UTER<span>LIZ</span></a><span>BUILT DIFFERENT. PLAY DIFFERENT.</span><span>© UterLIZ · MY INTRO</span></footer>
+<div class="toast" id="toast" role="status"></div>
+<script src="app.js"></script>
+</body></html>
