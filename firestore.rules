@@ -1,0 +1,66 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function admin() {
+      return signedIn()
+        && request.auth.token.email == 'utkarshgamer.ug@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+    function ownsOrder(orderId) {
+      return signedIn()
+        && get(/databases/$(database)/documents/orders/$(orderId)).data.ownerUid == request.auth.uid;
+    }
+
+    match /orders/{orderId} {
+      allow create: if signedIn()
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.ownerEmail == request.auth.token.email
+        && request.resource.data.status == 'New'
+        && request.resource.data.service is string
+        && request.resource.data.budget is number
+        && request.resource.data.budget >= 100
+        && request.resource.data.details is string
+        && request.resource.data.details.size() > 0;
+      allow read: if admin() || (signedIn() && resource.data.ownerUid == request.auth.uid);
+      allow update: if admin()
+        || (signedIn() && resource.data.ownerUid == request.auth.uid
+          && request.resource.data.ownerUid == resource.data.ownerUid
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['updatedAt']));
+      allow delete: if admin();
+
+      match /messages/{messageId} {
+        allow read: if admin() || ownsOrder(orderId);
+        allow create: if signedIn()
+          && (admin() || ownsOrder(orderId))
+          && request.resource.data.senderUid == request.auth.uid
+          && (
+            (request.resource.data.type == 'payment' && admin()
+              && request.resource.data.amount is number
+              && request.resource.data.amount > 0
+              && request.resource.data.note is string
+              && request.resource.data.status == 'pending')
+            ||
+            (request.resource.data.type != 'payment'
+              && ((request.resource.data.text is string && request.resource.data.text.size() <= 1500)
+                || (request.resource.data.fileUrl is string && request.resource.data.storagePath is string)))
+          );
+        allow update: if resource.data.type == 'payment' && (
+          (admin()
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','verifiedAt','verifiedBy','reviewedAt','reviewedBy'])
+            && request.resource.data.status in ['paid','rejected'])
+          ||
+          (ownsOrder(orderId)
+            && resource.data.status == 'pending'
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','paymentReference','referenceSubmittedAt'])
+            && request.resource.data.status == 'submitted'
+            && request.resource.data.paymentReference is string
+            && request.resource.data.paymentReference.size() >= 6
+            && request.resource.data.paymentReference.size() <= 100)
+        );
+        allow delete: if admin();
+      }
+    }
+    match /{document=**} { allow read, write: if false; }
+  }
+}

@@ -1,0 +1,21 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function signedIn() { return request.auth != null; }
+    function admin() {
+      return signedIn()
+        && request.auth.token.email == 'utkarshgamer.ug@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+    function ownsOrder(orderId) {
+      return signedIn()
+        && firestore.get(/databases/(default)/documents/orders/$(orderId)).data.ownerUid == request.auth.uid;
+    }
+    match /orders/{orderId}/{allPaths=**} {
+      allow read: if admin() || ownsOrder(orderId);
+      allow write: if (admin() || ownsOrder(orderId))
+        && request.resource.size < 10 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*|application/pdf|application/zip|text/plain|application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+    }
+  }
+}
